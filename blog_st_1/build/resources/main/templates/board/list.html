@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css" />
 </head>
 <body>
-<header th:insert="common/header.html"></header>
+<!-- board/list.html -->
+<header th:replace="~{common/header.html}"></header>
+
 <div class="container">
     <table class="table">
         <thead class="thead-light">
@@ -18,20 +20,20 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="text-center" th:each="post : ${postList}">
+        <tr class="text-center" th:each="post : ${blog_list}">
             <th scope="row">
-                <span th:text="${post.id}"></span>
+                <span th:text="${blog_id}"></span>
             </th>
             <td>
-                <a th:href="@{'/post/' + ${post.id}}">
-                    <span th:text="${post.title}"></span>
+                <a th:href="@{'/post/' + ${blog_id}}">
+                    <span th:text="${blog_title}"></span>
                 </a>
             </td>
             <td>
-                <span th:text="${post.author}"></span>
+                <span th:text="${blog_author}"></span>
             </td>
             <td>
-                <span th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                <span th:text="${#temporals.format(blog_createdDate, 'yyyy-MM-dd HH:mm')}"></span>
             </td>
         </tr>
         </tbody>
