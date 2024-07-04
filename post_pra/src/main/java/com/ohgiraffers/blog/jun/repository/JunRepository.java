@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JunRepository extends JpaRepository<JunBlog, Integer> {
+
+
+
     // JpaRepository를 상속받아 기본적인 CRUD 기능을 제공.
     // 제네릭 타입으로 JunBlog 엔티티와 기본 키 타입인 Integer를 지정
 }

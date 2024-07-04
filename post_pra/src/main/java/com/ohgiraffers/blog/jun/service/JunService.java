@@ -56,6 +56,13 @@ public class JunService {
 
         return resultValue; // 등록 결과를 반환
     }
+
+    public List<JunBlog> getAllBlogs() {
+        return junRepository.findAll();
+    }
+
+
+
 }
 
 // 게시물과 관련된 비즈니스 로직을 처리

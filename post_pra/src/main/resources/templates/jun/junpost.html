@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Post Page</title>
+    <link th:href="@{/css/junpo.css}" rel="stylesheet" />
+
+
+</head>
+<body>
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header">
+            <h2>블로그 제목: <span th:text="${blogTitle}">블로그 제목</span></h2>
+        </div>
+        <div class="card-body">
+            <p>블로그 내용: <span th:text="${blogContent}">블로그 내용</span></p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

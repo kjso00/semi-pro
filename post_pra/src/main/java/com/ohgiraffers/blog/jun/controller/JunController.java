@@ -1,9 +1,8 @@
 package com.ohgiraffers.blog.jun.controller;
 
-
 import com.ohgiraffers.blog.jun.model.dto.BlogDTO;
 import com.ohgiraffers.blog.jun.model.entity.JunBlog;
-import com.ohgiraffers.blog.jun.repository.JunRepository;
+import com.ohgiraffers.blog.jun.service.JunService;
 import com.ohgiraffers.blog.jun.service.JunService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,72 +10,100 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
-@RequestMapping("/jun") // 이 클래스의 모든 메서드는 "/jun" URL에 매핑된 요청을 처리
+@RequestMapping("/jun")
 public class JunController {
 
     private final JunService junService;
-    private final JunRepository junRepository;
+    private BlogDTO currentBlog;
 
-    // 생성자 주입을 통해 JunService를 인스턴스 변수에 할당
     @Autowired
-    public JunController(JunService junService, JunRepository junRepository) {
+    public JunController(JunService junService) {
         this.junService = junService;
-        this.junRepository = junRepository;
     }
 
     // GET 요청을 처리해서 "jun/page" 뷰를 반환
     @GetMapping
-    public String indexJUN() {
-        return "jun/page";
+    public String movejun() {
+        return "/jun/junpost-list";
     }
 
-    //POST 요청을 처리하여 블로그 게시물을 등록
-    @PostMapping
-    public ModelAndView postBlog(BlogDTO blogDTO, ModelAndView mv) {
 
-        //블로그 제목이 비어있는 경우 리다이렉트
-        if (blogDTO.getBlogTitle() == null || blogDTO.getBlogTitle().equals("")) {
-            mv.setViewName("redirect:jun");
+    @GetMapping("/junpost")
+    public String postPage(Model model) {
+        if (currentBlog != null) {
+            model.addAttribute("blogTitle", currentBlog.getBlogTitle());
+            model.addAttribute("blogContent", currentBlog.getBlogContent());
         }
-        // 블로그 내용이 비어있는 경우 리다이렉트
-        if (blogDTO.getBlogContent() == null || blogDTO.getBlogContent().equals("")) {
-            mv.setViewName("redirect:jun");
+        return "jun/junpost";
+    }
+
+    @GetMapping("/junpost-list")
+    public String getBlogList(Model model) {
+        List<JunBlog> blogList = junService.getAllBlogs();
+        model.addAttribute("blogList", blogList);
+        return "/jun/junpost-list";
+    }
+
+
+
+
+
+    @PostMapping
+    public ModelAndView postBlog(BlogDTO blogDTO, ModelAndView mv){
+
+        if(blogDTO.getBlogTitle() == null || blogDTO.getBlogTitle().equals("")){
+            mv.setViewName("redirect:/jun/post");
         }
-        // 블로그 게시물을 등록하고 결과를 확인
+        if(blogDTO.getBlogContent() == null || blogDTO.getBlogContent().equals("")){
+            mv.setViewName("redirect:jun/post");
+        }
+
         int result = junService.post(blogDTO);
 
-        //등록에 실패한 경우 에러 페이지로 이동
-        if (result <= 0) {
+        if(result <= 0){
             mv.setViewName("error/page");
-        } else {
-            // 성공한 경우 "jun/page" 뷰로 이동
-            mv.setViewName("jun/page");
+        }else{
+            currentBlog = blogDTO;
+            mv.setViewName("redirect:/jun/junpost");
         }
         return mv;
     }
 
-    @GetMapping("/")
-    public String showBlogForm(Model model) {
-        model.addAttribute("jun", "/save");
-        return "blog-form";
+    @GetMapping("/review")
+    public String share() {
+        return "/review";
     }
 
-    @PostMapping("/jun")  // /save
-    public String saveBlog(@RequestParam("blogTitle") String blogTitle,
-                           @RequestParam("blogContent") String blogContent) {
-        JunBlog junBlog = new JunBlog();
-        junBlog.setBlogTitle(blogTitle);
-        junBlog.setBlogContent(blogContent);
-        junRepository.save(junBlog);
-        return "redirect:/";
-    }
+
 }
 
-// 이 코드는 JeasuckController 클래스로, 블로그 게시물 관리를 위한 Spring MVC 컨트롤러입니다.
-// /jaesuck URL로 들어오는 요청을 처리하며, indexJaesuck 메서드는 GET 요청에 대해
-// "jaesuck/page" 뷰를 반환합니다. postBlog 메서드는 POST 요청을 처리하며, 블로그 제목과 내용
-// 이 비어있지 않은지 확인한 후, 게시물 등록을 시도합니다. 등록 성공 여부에 따라 뷰를 설정하여 반환합니다.
+
+// 메인화면 -> 글 작성 페이지 -> 작성된 글 표시   // 글 목록 화면 연결 안됨
+//
+//
+//
+//메인화면
+//->글 목록 화면
+//-홈 버튼 추가
+//- 게시물 목록에서 게시물 등록, 수정, 삭제 기능
+//-등록
+//-> 글 작성 페이지
+//
+//
+//root계정으로
+//
+//mysql 설정할때 root
+//
+//
+//    url: jdbc:mysql://localhost:3306/gangnam
+//    username: gangnam
+//    password: gangnam
+//    driver-class-name: com.mysql.cj.jdbc.Driver
+//
+//위에 세개만 그대로
+
