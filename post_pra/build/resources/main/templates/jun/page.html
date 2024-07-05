@@ -8,8 +8,11 @@
 
 </head>
 <body>
+
+
+
 <div class="container my-5">
-    <h1 class="text-center mb-4">안녕 나는 준성 페이지야</h1>
+    <h1 class="text-center mb-4">글 써라</h1>
     <form th:action="${jun}" method="post" class="mt-4">
         <div class="mb-3">
             <label for="blogTitle" class="form-label">블로그 제목 :</label>
@@ -21,6 +24,7 @@
         </div>
         <div class="d-grid gap-2 col-6 mx-auto">
             <button type="submit" class="btn btn-primary">Submit</button>  <!-- 폼 데이터 제출-->
+            <button type="button" class="btn btn-primary" onclick="location.href='/jun/junpost-list'">게시물 목록</button>
 
 
             <!--<button type="button" class="btn btn-primary" onclick="location.href='jun'">홈</button>-->

@@ -63,6 +63,13 @@ public class JunService {
 
 
 
+
+
+
+
+
+
+
 }
 
 // 게시물과 관련된 비즈니스 로직을 처리

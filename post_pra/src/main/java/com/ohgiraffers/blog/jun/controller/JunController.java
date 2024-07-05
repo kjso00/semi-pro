@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -26,10 +27,9 @@ public class JunController {
         this.junService = junService;
     }
 
-    // GET 요청을 처리해서 "jun/page" 뷰를 반환
     @GetMapping
-    public String movejun() {
-        return "/jun/junpost-list";
+    public String jun() {
+        return "/jun/page";
     }
 
 
@@ -48,6 +48,17 @@ public class JunController {
         model.addAttribute("blogList", blogList);
         return "/jun/junpost-list";
     }
+    @GetMapping("/postupdate")
+    public String updatePage(@RequestParam("blogTitle") String blogTitle, @RequestParam("blogContent") String blogContent, Model model) {
+        model.addAttribute("blogTitle", blogTitle);
+        model.addAttribute("blogContent", blogContent);
+        return "jun/postupdate";
+    }
+
+
+
+
+
 
 
 
