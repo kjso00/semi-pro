@@ -21,10 +21,18 @@
         </thead>
         <tbody>
         <tr th:each="blog : ${blogList}">
-            <td th:text="${blog.blogTitle}"></td> 
-            <!--<a th:href="@{'/blogs/' + ${blog.id}}" th:text="${blog.blogTitle}"></a>-->
+            <td th:text="${blog.blogTitle}"></td>
          <!--   <td th:text="${blog.blogContent}"></td> -->
             <td th:text="${#dates.format(blog.createDate, 'yyyy-MM-dd')}"></td>
+
+            <td>
+                <a th:href="@{'/jun/post-detail/' + ${blog.blogid}}" class="btn btn-info">상세조회</a>
+                <form th:action="@{/jun/post-delete}" method="post" style="display: inline;">
+                    <input type="hidden" name="blogid" th:value="${blog.blogid}" />
+                    <button type="submit" class="btn btn-danger">삭제</button>
+                </form>
+
+            </td>
 
 
 

@@ -4,27 +4,29 @@ package com.ohgiraffers.post_st.model.dto;
 // JunBlogDTO 클래스는 블로그 게시물의 데이터 전송 객체를 나타냄
 public class JunBlogDTO {
 
-    private Integer id;
+    private Long blogid;
 
     private String blogTitle;
 
     private String blogContent;
 
+
+
     public JunBlogDTO() {
     }
 
-    public JunBlogDTO(Integer id, String blogTitle, String blogContent) {
-        this.id = id;
+    public JunBlogDTO(Long blogid, String blogTitle, String blogContent) {
+        this.blogid = blogid;
         this.blogTitle = blogTitle;
         this.blogContent = blogContent;
     }
 
-    public Integer getId() {
-        return id;
+    public long getId() {
+        return blogid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Long id) {
+        this.blogid = blogid;
     }
 
     public String getBlogTitle() {
@@ -46,9 +48,11 @@ public class JunBlogDTO {
     @Override
     public String toString() {
         return "JunBlogDTO{" +
-                "id=" + id +
+                "blogid=" + blogid +
                 ", blogTitle='" + blogTitle + '\'' +
                 ", blogContent='" + blogContent + '\'' +
                 '}';
     }
+
+
 }

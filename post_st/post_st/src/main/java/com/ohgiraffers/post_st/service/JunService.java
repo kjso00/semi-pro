@@ -4,6 +4,7 @@ package com.ohgiraffers.post_st.service;
 import com.ohgiraffers.post_st.model.dto.JunBlogDTO;
 import com.ohgiraffers.post_st.model.entity.JunBlog;
 import com.ohgiraffers.post_st.repository.JunRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class JunService {
+public class JunService  {
 
     // JunRepository 인터페이스를 구현한 빈을 주입받음
     private final JunRepository junRepository;
@@ -22,6 +23,8 @@ public class JunService {
     public JunService(JunRepository junRepository) {
         this.junRepository = junRepository;
     }
+
+
 
     // 메서드가 하나의 트랜잭션으로 실행되어야 함을 나타냄. 메서드 실행 중 발생할 수 있는 데이터베이스 관련 예외를 처리하고 롤백할 수 있다.
     @Transactional
@@ -65,22 +68,22 @@ public class JunService {
         return junRepository.findAll();
     }
 
-//    // 글 상세조회
-//    // JunBlog 객체를 ID로 조회하는 메서드
-//    public JunBlog getBlogById(Integer id) {
-//        return junRepository.findById(id).orElse(null);
-//    }
-    // ID를 통해 특정 게시글을 가져오는 메서드
-//    public JunBlog getBlogById(Integer id) {
-//
-//        return junRepository.findById(id);
-//        // ID로 게시글을 데이터베이스에서 조회하여 반환
-//    }
+      // 글 상세조회
 
-    public Optional<JunBlog> getBlogById(Integer id) {
-
-        return junRepository.findById(id); // ID로 게시글을 데이터베이스에서 조회하여 반환
+    public JunBlog getBlogById(Long blogid) {
+        return junRepository.findById(blogid).orElse(null);
     }
+
+    // 글 수정
+
+    // 글 삭제
+
+    // 게시물 삭제
+    @Transactional
+    public void deletePost(Long blogId) {
+        junRepository.deleteById(blogId);
+    }
+
 
 
 }

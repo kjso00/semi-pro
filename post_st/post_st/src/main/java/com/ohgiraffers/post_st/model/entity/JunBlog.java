@@ -12,7 +12,7 @@ public class JunBlog {
     @Id
     @Column(name = "blog_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer blogid; //
+    private Long blogid;
 
     @Column(name = "blog_title", unique = true, nullable = false)
     private String blogTitle;
@@ -27,18 +27,18 @@ public class JunBlog {
     public JunBlog() {
     }
 
-    public JunBlog(Integer blogid, String blogTitle, String blogContent, Date createDate) {
+    public JunBlog(Long blogid, String blogTitle, String blogContent, Date createDate) {
         this.blogid = blogid;
         this.blogTitle = blogTitle;
         this.blogContent = blogContent;
         this.createDate = createDate;
     }
 
-    public int getBlogNo() {
+    public Long getBlogid() {
         return blogid;
     }
 
-    public void setBlogNo(Integer blogid) {
+    public void setBlogid(Long blogid) {
         this.blogid = blogid;
     }
 
