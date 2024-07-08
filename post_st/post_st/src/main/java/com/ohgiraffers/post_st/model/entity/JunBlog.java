@@ -10,9 +10,9 @@ import java.util.Date;
 public class JunBlog {
 
     @Id
-    @Column(name = "blog_no")
+    @Column(name = "blog_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int blogNo; //
+    private Integer blogid; //
 
     @Column(name = "blog_title", unique = true, nullable = false)
     private String blogTitle;
@@ -27,19 +27,19 @@ public class JunBlog {
     public JunBlog() {
     }
 
-    public JunBlog(int blogNo, String blogTitle, String blogContent, Date createDate) {
-        this.blogNo = blogNo;
+    public JunBlog(Integer blogid, String blogTitle, String blogContent, Date createDate) {
+        this.blogid = blogid;
         this.blogTitle = blogTitle;
         this.blogContent = blogContent;
         this.createDate = createDate;
     }
 
     public int getBlogNo() {
-        return blogNo;
+        return blogid;
     }
 
-    public void setBlogNo(int blogNo) {
-        this.blogNo = blogNo;
+    public void setBlogNo(Integer blogid) {
+        this.blogid = blogid;
     }
 
     public String getBlogTitle() {
@@ -69,7 +69,7 @@ public class JunBlog {
     @Override
     public String toString() {
         return "JunBlog{" +
-                "blogNo=" + blogNo +
+                "blogid=" + blogid +
                 ", blogTitle='" + blogTitle + '\'' +
                 ", blogContent='" + blogContent + '\'' +
                 ", createDate=" + createDate +

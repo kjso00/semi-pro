@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Detail</title>
+
+</head>
+<body>
+<div class="container my-5">
+    <h1 class="text-center mb-4" th:text="${blog.blogTitle}">Blog Title</h1>
+    <div>
+        <p th:text="${blog.blogContent}">Blog Content</p>
+    </div>
+    <div>
+        <p th:text="${#dates.format(blog.createDate, 'yyyy-MM-dd')}">Created Date</p>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="location.href='/jun/post-list'">Back to List</button>
+</div>
+</body>
+</html>

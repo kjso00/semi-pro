@@ -5,9 +5,12 @@ import com.ohgiraffers.post_st.model.dto.JunBlogDTO;
 import com.ohgiraffers.post_st.model.entity.JunBlog;
 import com.ohgiraffers.post_st.service.JunService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,6 +45,12 @@ public class JunController {
         return "/jun/post";
     }
 
+//    @GetMapping("/postDetail")
+//    public String showPostDetailForm() {
+//        return "/jun/postDetail";
+//    }
+
+    // 게시물을 등록하는 부분
     @PostMapping
     // JunBlogDTO와 ModelAndView 객체를 매개변수로 받음 반환타입은 ModelAndView
     // 데이터 전송객체 JunBlogDTO, 요청 파라미터를 junBlogDTO에 바인딩
@@ -66,7 +75,7 @@ public class JunController {
         // ModelAndView 객체를 반환합니다.
         return mv;
     }
-
+    // 작성된 글 목록을 보여주는 부분
     @GetMapping("/post-list")
     public String getBlogList(Model model) {
         // JunService를 통해 모든 블로그 게시글을 가져옴
@@ -76,6 +85,51 @@ public class JunController {
         // 뷰 이름을 반환함. 여기서는 "/jun/post-list"를 반환하여 해당 뷰를 표시하도록 함
         return "/jun/post-list";
     }
+
+    // 글 상세조회
+    // 1. 게시물 리스트에서 글 보기 버튼 추가
+    // 2. 버튼을 누르면 작성된 글 조회하는 페이지로 넘어감
+    // 오류- @GetMapping("/post-list/{id}")때문에 /post-list페이지가 안나옴
+    // 근데 /post-list/1을 하니깐 작성한 글이 나오긴함    왜그러지................
+
+    @GetMapping
+    public List<JunBlog> getAllBlogs() {
+        return junService.getAllBlogs();
+    }
+
+//    @GetMapping("/post-list/{id}")
+//    public ResponseEntity<JunBlog> getBlogById(@PathVariable Integer id) {
+//        JunBlog blog = junService.getBlogById(id);
+//        if (blog == null) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
+//        return ResponseEntity.ok(blog);
+//    }
+
+    // 정한님 함수 통해서 바꾼것
+
+    @GetMapping("/postDetail/{id}")
+    public ModelAndView showReadPage(@PathVariable("id") Integer id, ModelAndView mv) {
+        JunBlog post = junService.getBlogById(id).orElse(null); // ID로 게시글을 찾음
+        mv.addObject("blog", post); // 선택된 게시글을 모델앤뷰에 추가
+//        mv.addObject("selectedId", id); // 선택된 게시글 ID를 모델앤뷰에 추가
+//        mv.addObject("currentPage", "postreader"); // 현재 페이지 정보를 모델앤뷰에 추가
+        mv.setViewName("/jun/postDetail"); // 뷰 이름 설정
+        return mv; // 모델앤뷰 객체 반환
+    }
+
+
+
+
+    // 작성된 글 수정
+    // 1. 글 목록중에 수정하고싶은 게시물로 들어가기
+    // 2. 글 수정 페이지 새로 만들기
+    // 3. 작성된 글의 데이터를 가져오기
+    // -글 작성 페이지 형식으로 돼있는데 작성한 글이 들어가있어야됨
+    // 4.3에서 가져온 글을 수정하고 다시 저장
+    // - 새로운 게시물로 저장되지않고 원래 있던 게시물에 저장돼야함
+
+
 }
 
 

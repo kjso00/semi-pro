@@ -14,15 +14,20 @@
         <thead>
         <tr>
             <th>Title</th>
-            <th>Content</th>
+            <!--<th>Content</th>-->
             <th>Created Date</th>
+            <th>OPTION</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="blog : ${blogList}">
-            <td th:text="${blog.blogTitle}"></td>
-            <td th:text="${blog.blogContent}"></td>
+            <td th:text="${blog.blogTitle}"></td> 
+            <!--<a th:href="@{'/blogs/' + ${blog.id}}" th:text="${blog.blogTitle}"></a>-->
+         <!--   <td th:text="${blog.blogContent}"></td> -->
             <td th:text="${#dates.format(blog.createDate, 'yyyy-MM-dd')}"></td>
+
+
+
         </tr>
         </tbody>
     </table>

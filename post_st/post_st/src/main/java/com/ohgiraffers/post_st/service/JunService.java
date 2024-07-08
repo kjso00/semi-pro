@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JunService {
@@ -58,7 +59,28 @@ public class JunService {
         return resultValue;
     }
 
+    // List<JunBlog> - 이 메서드는 JunBlog 객체의 리스트를 반환
+    // getAllBlogs() - 메서드 이름은 getAllBlogs입니다. 이는 모든 블로그를 가져온다는 의미입니다
     public List<JunBlog> getAllBlogs() {
         return junRepository.findAll();
     }
+
+//    // 글 상세조회
+//    // JunBlog 객체를 ID로 조회하는 메서드
+//    public JunBlog getBlogById(Integer id) {
+//        return junRepository.findById(id).orElse(null);
+//    }
+    // ID를 통해 특정 게시글을 가져오는 메서드
+//    public JunBlog getBlogById(Integer id) {
+//
+//        return junRepository.findById(id);
+//        // ID로 게시글을 데이터베이스에서 조회하여 반환
+//    }
+
+    public Optional<JunBlog> getBlogById(Integer id) {
+
+        return junRepository.findById(id); // ID로 게시글을 데이터베이스에서 조회하여 반환
+    }
+
+
 }
