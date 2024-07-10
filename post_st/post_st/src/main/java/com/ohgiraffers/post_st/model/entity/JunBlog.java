@@ -12,7 +12,7 @@ public class JunBlog {
     @Id
     @Column(name = "blog_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long blogid;
+    private Long id;
 
     @Column(name = "blog_title", unique = true, nullable = false)
     private String blogTitle;
@@ -27,19 +27,19 @@ public class JunBlog {
     public JunBlog() {
     }
 
-    public JunBlog(Long blogid, String blogTitle, String blogContent, Date createDate) {
-        this.blogid = blogid;
+    public JunBlog(Long id, String blogTitle, String blogContent, Date createDate) {
+        this.id = id;
         this.blogTitle = blogTitle;
         this.blogContent = blogContent;
         this.createDate = createDate;
     }
 
-    public Long getBlogid() {
-        return blogid;
+    public Long getId() {
+        return id;
     }
 
-    public void setBlogid(Long blogid) {
-        this.blogid = blogid;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getBlogTitle() {
@@ -69,7 +69,7 @@ public class JunBlog {
     @Override
     public String toString() {
         return "JunBlog{" +
-                "blogid=" + blogid +
+                "id=" + id +
                 ", blogTitle='" + blogTitle + '\'' +
                 ", blogContent='" + blogContent + '\'' +
                 ", createDate=" + createDate +

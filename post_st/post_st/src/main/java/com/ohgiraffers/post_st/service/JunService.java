@@ -42,7 +42,7 @@ public class JunService  {
             }
         }
 
-        // 새로운 JaesukBlog 객체를 생성하고 DTO로부터 받은 데이터를 설정합니다.
+        // 새로운 JunBlog 객체를 생성하고 DTO로부터 받은 데이터를 설정합니다.
         JunBlog saveBlog = new JunBlog();
         saveBlog.setBlogContent(junblogDTO.getBlogContent());
         saveBlog.setBlogTitle(junblogDTO.getBlogTitle());
@@ -75,6 +75,14 @@ public class JunService  {
     }
 
     // 글 수정
+
+    public JunBlog updatePost(JunBlogDTO junBlogDTO) {
+        JunBlog junBlog = junRepository.findById(junBlogDTO.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid post Id:" + junBlogDTO.getId()));
+        junBlog.setBlogTitle(junBlogDTO.getBlogTitle());
+        junBlog.setBlogContent(junBlogDTO.getBlogContent());
+        return junRepository.save(junBlog);
+    }
 
     // 글 삭제
 

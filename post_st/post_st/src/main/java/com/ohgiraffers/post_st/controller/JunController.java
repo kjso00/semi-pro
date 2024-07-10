@@ -5,7 +5,7 @@ import com.ohgiraffers.post_st.model.dto.JunBlogDTO;
 import com.ohgiraffers.post_st.model.entity.JunBlog;
 import com.ohgiraffers.post_st.service.JunService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -104,8 +104,6 @@ public class JunController {
 
 
 
-
-
     // 작성된 글 수정
     // 1. 글 목록중에 수정하고싶은 게시물로 들어가기
     // 2. 글 수정 페이지 새로 만들기
@@ -114,21 +112,38 @@ public class JunController {
     // 4.3에서 가져온 글을 수정하고 다시 저장
     // - 새로운 게시물로 저장되지않고 원래 있던 게시물에 저장돼야함
 
-    // 작성된 글 삭제
-    // 1. 삭제
 
-
-    // 게시물 삭제 요청 처리
-    @PostMapping("/jun/post-delete")
-    public String postDelete(@RequestParam("blogid") Long blogId){
-        junService.deletePost(blogId);
-        return "redirect:/jun/post-list";
+    @GetMapping("/post-edit")
+    public String showUpdateForm(@RequestParam("id") Long id, Model model) {
+        JunBlog blog = junService.getBlogById(id);
+        JunBlogDTO blogDTO = new JunBlogDTO();
+        blogDTO.setId(blog.getId());
+        blogDTO.setBlogTitle(blog.getBlogTitle());
+        blogDTO.setBlogContent(blog.getBlogContent());
+        model.addAttribute("junBlogDTO", blogDTO);
+        return "/jun/post-edit";
     }
 
 
 
+//        JunBlog blog = junService.getBlogById(blogid);
+//        model.addAttribute("blog", blog);
+//        return "/jun/post-edit";
+
+    @PostMapping("/update")
+    public String updatePost(@ModelAttribute("junBlogDTO") JunBlogDTO junBlogDTO) {
+        JunBlog updatedPost = junService.updatePost(junBlogDTO);
+        // 수정 성공 시, 수정된 게시물 상세 페이지로 리다이렉트
+        return "redirect:/jun/post-detail/" + updatedPost.getId();
+    }
 
 
+
+//    @PostMapping("/update")
+//    public ResponseEntity<JunBlog> updatePost(@RequestBody JunBlogDTO junBlogDTO) {
+//        JunBlog updatedPost = junService.updatePost(junBlogDTO);
+//        return ResponseEntity.ok(updatedPost);
+//    }
 
 }
 
