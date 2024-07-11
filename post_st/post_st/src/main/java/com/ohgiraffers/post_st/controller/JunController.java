@@ -134,26 +134,11 @@ public class JunController {
     // 2. 삭제 버튼을 누르면 해당 id의 게시물의 데이터가 데이터베이스에서 삭제되고
     // 3. 게시물 목록에서도 없어져야됨
 
-    // 삭제 요청 처리
-    @PostMapping("/jun/post-list/delete/{id}")
-    public String deletePost(@PathVariable("id") Long id) {
-        junService.deletePost(id); // JunService를 통해 삭제 로직 실행
-        return "redirect:/jun/post-list"; // 삭제 후에는 다시 게시물 목록 페이지로 리다이렉트
+    @PostMapping("/delete/{id}")
+    public String deleteBlog(@PathVariable Long id) {
+        junService.deleteBlog(id);
+        return "redirect:/jun/post-list";
     }
-
-//    @PostMapping("/jun/post-list/{id}/delete")
-//    public String deletePost(@PathVariable("id") Long id) {
-//        junService.deletePost(id);
-//        return "redirect:/jun/post-list";
-//    }
-
-
-
-
-
-
-
-
 
 
 }

@@ -85,10 +85,13 @@ public class JunService {
     // 글 삭제
 
     // 게시물 삭제
+
     @Transactional
-    public void deletePost(Long id){
+    public void deleteBlog(Long id) {
         junRepository.deleteById(id);
     }
+
+
 
 }
 
