@@ -8,6 +8,8 @@ import java.util.Date;
 @Entity
 @Table(name = "jun_blog")
 public class JunBlog {
+    // 데이터베이스 테이블과 매핑되는 클래스입니다. 데이터베이스의 구조를 반영하며,
+    // 주로 JPA(Java Persistence API)를 사용해 정의됩니다.
 
     @Id
     @Column(name = "blog_id")

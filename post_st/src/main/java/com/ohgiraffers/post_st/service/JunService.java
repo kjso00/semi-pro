@@ -16,6 +16,9 @@ import java.util.Optional;
 @Service
 public class JunService {
 
+    // 비즈니스 로직을 처리하는 계층입니다. 컨트롤러와 레포지토리 사이의 중재자 역할을 하며,
+    // 트랜잭션 관리 등을 포함
+
     // JunRepository 인터페이스를 구현한 빈을 주입받음
     private final JunRepository junRepository;
 
@@ -92,6 +95,9 @@ public class JunService {
     public void deleteBlog(Long id) {
         junRepository.deleteById(id);
     }
+
+    // 좋아요 기능
+
 
 
 

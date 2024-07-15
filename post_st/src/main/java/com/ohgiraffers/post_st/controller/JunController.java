@@ -7,7 +7,6 @@ import com.ohgiraffers.post_st.service.JunService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +17,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/jun")     //이 클래스 내의 모든 메소드는 /jun으로 시작하는 URL에 매핑
 public class JunController {
+
+    // 클라이언트의 요청을 처리하고, 적절한 서비스 메서드를 호출하여 결과를 반환합니다.
+    // 주로 HTTP 요청/응답을 처리
 
     // JunService 타입의 필드르 선언. 서비스 계층의 메소드를 호출하기 위해 사용됨
     // 'private final'로 선언해서 반드시 초기화 해야되고(생성자에서), 변경할 수 없음
@@ -34,6 +36,8 @@ public class JunController {
     // 생성자 주입 방식으로 'JunService'타입의 객체를 주입받음. 스프링 컨테이너가 'JunController'객체를 생성할 때, 'JunService'타입의 빈을 찾아 생성자의 매개변수로 주입
     public JunController(JunService junService) {
         // 주입된 JunService 인스턴스를 클래스 필드에 할당하여 초기화함
+        // this.junService: 이 객체의 필드, junService: 메서드의 매개변수로 전달된 junService
+        // 메서드 내에서 전달된 인자(parameter)를 가리키며, 해당 메서드 내에서만 유효한 변수
         this.junService = junService;
     }
 
@@ -83,9 +87,12 @@ public class JunController {
         return mv;
     }
     // 글 목록
+    // "/post-list"로 url 요청을 날림
     @GetMapping("/post-list")
     public String getBlogList(Model model) {
         // JunService를 통해 모든 블로그 게시글을 가져옴
+        // junService.getAllBlogs()를 호출하여 모든 블로그 게시글을 DB에서 가져옴
+        // 가져온 게시글 목록을 blogList에 저장
         List<JunBlog> blogList = junService.getAllBlogs();
         // Model 객체에 "blogList"라는 이름으로 가져온 블로그 목록을 추가
         model.addAttribute("blogList", blogList);
@@ -101,6 +108,7 @@ public class JunController {
 
     // {blogid}는 경로 변수(path variable)로, URL에서 가변적인 값을 나타냅
     @GetMapping("/post-detail/{blogid}")
+    // @PathVariable로 url 경로에서 추출한 blogid 값을 메서드의 매개변수로 받음
     public String getBlogDetail(@PathVariable Long blogid, Model model) {
         // ID를 이용하여 해당 블로그 게시글을 조회
         JunBlog blog = junService.getBlogById(blogid);
@@ -153,6 +161,9 @@ public class JunController {
     // 2. 좋아요 버튼을 누르면 아이콘 색깔이 변하고 정보가 DB에 저장
     // 3. 다시 좋아요 버튼을 누르면 아이콘 색깔이 되돌아오고 DB에서 데이터가 삭제됨
 
+
+    // 알아야할 개념
+    // Spring MVC 동작 구조 (완벽히는 아니더라도 흐름이라도 이해하기)
 
 }
 
