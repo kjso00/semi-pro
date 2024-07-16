@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Detail</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container my-5">
+    <h1 class="text-center mb-4" th:text="${blog.blogTitle}">Blog Title</h1>
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text" th:text="${blog.blogContent}"></p>
+            <p class="card-text">
+                <small class="text-muted" th:text="${#dates.format(blog.createDate, 'yyyy-MM-dd HH:mm:ss')}"></small>
+            </p>
+        </div>
+    </div>
+    <button class="btn btn-primary mt-3" onclick="location.href='/jun/post-list'">목록으로</button>
+</div>
+<div>
+    <form th:action="@{/jun/post-detail/{id}/like(id=${blog.id})}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger mt-3" th:classappend="${blog.like == 1} ? 'btn-blue' : ''">좋아요</button>
+    </form>
+    <form th:action="@{/jun/post-detail/{id}/unlike(id=${blog.id})}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger mt-3" th:classappend="${blog.like == 0} ? 'btn-dark' : ''">싫어요</button>
+    </form>
+</div>
+</body>
+</html>
