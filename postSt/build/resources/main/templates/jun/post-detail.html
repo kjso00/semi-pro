@@ -31,17 +31,49 @@
     <button class="like-button" th:classappend="${blog.like == 1} ? 'btn-blue' : ''" onclick="likeMethod()">
         좋아요
     </button>
-    <button type="submit" class="unlike-button" th:classappend="${blog.like == 0} ? 'btn-blue' : ''">안좋아요</button>
+    <button  class="unlike-button" th:classappend="${blog.like == 0} ? 'btn-blue' : ''" onclick="unlikeMethod()">
+        안좋아요</button>
 </div>
 <script th:inline="javascript">
 
-
+    // 위 좋아요 버튼에서 onclick에 의해서 아래의 likeMethod가 실행됨
     const likeMethod = () => {
+        // id 변수에 [[${blog.id}]] 이 값이 할당
         const id = [[${blog.id}]];
+
+        // fetch(요청을 보낼 경로url, option(요청방식 ex)get,post 등등.. 기본값은 get))
+        // /jun/post-detail/${id}/like 이 경로로 POST방식으로 요청을 보냄
         fetch(`/jun/post-detail/${id}/like`, {
             method: "POST"
+            // .then() : 요청에 성공했을때 패치 응답을 여기서 처리
+            // .catch() : 요청에 실패했을때 패치 응답을 여기서 처리
+            // 요청에 성공하면 json정보가 반환됨
         }).then(res => res.json()).then(data => console.log(data))
             .catch(error => console.log(error));
+    }
+
+    const unlikeMethod = () => {
+        const id = [[$]]
+    }
+
+    // 안좋아요
+    const unlikeMethod = () => {
+        // id 변수에 [[${blog.id}]] 이 값이 할당
+        const id = [[${blog.id}]];
+
+        // fetch(요청을 보낼 경로url, option(요청방식 ex)get,post 등등.. 기본값은 get))
+        // /jun/post-detail/${id}/like 이 경로로 POST방식으로 요청을 보냄
+        fetch(`/jun/post-detail/${id}/unlike`, {
+            method: "POST"
+            // .then() : 요청에 성공했을때 패치 응답을 여기서 처리
+            // .catch() : 요청에 실패했을때 패치 응답을 여기서 처리
+            // 요청에 성공하면 json정보가 반환됨
+        }).then(res => res.json()).then(data => console.log(data))
+            .catch(error => console.log(error));
+    }
+
+    const unlikeMethod = () => {
+        const id = [[$]]
     }
 </script>
 </body>

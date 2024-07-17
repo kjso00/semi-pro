@@ -166,12 +166,12 @@ public class JunController {
 //     좋아요 기능
 //     1. 컨트롤러에 게시글 id 전달 - @@PathVariable
 
-    @PostMapping("/post-detail/{id}/unlike")
-    public String unlikePost(@PathVariable Long id, Model model) {
-        JunBlog blog = junService.unlikeBlog(id);
-        model.addAttribute("blog", blog);
-        return "/jun/post-detail";
-    }
+//    @PostMapping("/post-detail/{id}/unlike")
+//    public String unlikePost(@PathVariable Long id, Model model) {
+//        JunBlog blog = junService.unlikeBlog(id);
+//        model.addAttribute("blog", blog);
+//        return "/jun/post-detail";
+//    }
 
     // 좋아요 기능 fetch api 사용해서 비동기 방식으로 바꾸기
 
