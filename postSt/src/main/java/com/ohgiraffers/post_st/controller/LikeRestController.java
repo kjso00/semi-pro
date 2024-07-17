@@ -9,6 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+// 비동기 통신에서 쓰이는 Body 안의 데이터(JSON객체)를 자바 객체(VO)를
+// 데이터(JSONRORCP)로 바꿔 Body 안에 넣어주는 어노테이션
+// @Controller로 Data를 반활할 경우
+// 데이터를 반환하기 위해  ResponseEntity(HttpStatus + HttpHeaders + HttpBody 형태의 데이터,
+// 한 마디로 Http 응답 메시지)의 Body(Response Body)를 사용해야 하는데
+// 이 때 @ReoponsBody 어노테이션을 사용하면됨
+// REST API를 개발할 때 주로 사용 ResponseEntity로 감싸서 반환
 @RestController
 public class LikeRestController {
 
@@ -25,6 +33,12 @@ public class LikeRestController {
         JunBlog blog = junService.likeBlog(id);
         // 8. 전달받은걸 화면에 반환 - model
 
+        return ResponseEntity.ok(blog);
+    }
+
+    @PostMapping("/post-detail/{id}/unlike")
+    public ResponseEntity<?> unlikePost(@PathVariable Long id, Model model) {
+        JunBlog blog = junService.unlikeBlog(id);
         return ResponseEntity.ok(blog);
     }
 }

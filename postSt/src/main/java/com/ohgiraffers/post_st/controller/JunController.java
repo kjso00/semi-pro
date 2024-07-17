@@ -166,10 +166,6 @@ public class JunController {
 //     좋아요 기능
 //     1. 컨트롤러에 게시글 id 전달 - @@PathVariable
 
-
-
-
-
     @PostMapping("/post-detail/{id}/unlike")
     public String unlikePost(@PathVariable Long id, Model model) {
         JunBlog blog = junService.unlikeBlog(id);
@@ -177,10 +173,7 @@ public class JunController {
         return "/jun/post-detail";
     }
 
-
-
     // 좋아요 기능 fetch api 사용해서 비동기 방식으로 바꾸기
-
 
     // 댓글
     // . 댓글 엔티티 생성  - 댓글id, comment
@@ -188,9 +181,6 @@ public class JunController {
     // . 게시물 상세조회 페이지에서 댓글 입력창 만들고
     // . 댓글 입력창에 값을 입력하고 컨트롤러에 전달 - form,submit,post
     // . 컨트롤러에서 받은 입력값을 서비스에 넘기기
-
-
-    // 버튼 id로 js랑 연결
 
 
 }
