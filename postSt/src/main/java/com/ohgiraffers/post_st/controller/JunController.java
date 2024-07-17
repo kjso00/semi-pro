@@ -7,6 +7,7 @@ import com.ohgiraffers.post_st.service.JunService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -114,6 +115,7 @@ public class JunController {
         JunBlog blog = junService.getBlogById(blogid);
         // 조회한 블로그 게시글을 모델에 추가
         model.addAttribute("blog", blog);
+
         // 상세조회 페이지로 이동
         return "/jun/post-detail";
     }
@@ -163,14 +165,9 @@ public class JunController {
 
 //     좋아요 기능
 //     1. 컨트롤러에 게시글 id 전달 - @@PathVariable
-    @PostMapping("/post-detail/{id}/like")
-    public String likePost(@PathVariable Long id, Model model) {
-        // 2. id를 서비스에 전달  - id
-        JunBlog blog = junService.likeBlog(id);
-        // 8. 전달받은걸 화면에 반환 - model
-        model.addAttribute("blog", blog);
-        return "/jun/post-detail";
-    }
+
+
+
 
 
     @PostMapping("/post-detail/{id}/unlike")
@@ -181,10 +178,20 @@ public class JunController {
     }
 
 
-    // 댓글
 
-    // 알아야할 개념
-    // Spring MVC 동작 구조 (완벽히는 아니더라도 흐름이라도 이해하기)
+    // 좋아요 기능 fetch api 사용해서 비동기 방식으로 바꾸기
+
+
+    // 댓글
+    // . 댓글 엔티티 생성  - 댓글id, comment
+    // 2. 게시글 id 조회 - findbyid
+    // . 게시물 상세조회 페이지에서 댓글 입력창 만들고
+    // . 댓글 입력창에 값을 입력하고 컨트롤러에 전달 - form,submit,post
+    // . 컨트롤러에서 받은 입력값을 서비스에 넘기기
+
+
+    // 버튼 id로 js랑 연결
+
 
 }
 

@@ -26,8 +26,8 @@ public class JunBlog {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
-    @Column(name = "blog_like", nullable = false)
-    private Integer like;
+    @Column(name = "blog_like", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int like;
 
 
     public JunBlog() {

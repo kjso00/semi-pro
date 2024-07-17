@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <title>Blog Detail</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .unlike-button {
+            background-color: burlywood;
+        }
+
+        .like-button {
+            background-color: crimson;
+        }
+    </style>
 </head>
 <body>
 <div class="container my-5">
@@ -19,12 +28,21 @@
     <button class="btn btn-primary mt-3" onclick="location.href='/jun/post-list'">목록으로</button>
 </div>
 <div>
-    <form th:action="@{/jun/post-detail/{id}/like(id=${blog.id})}" method="post" style="display:inline;">
-        <button type="submit" class="btn btn-danger mt-3" th:classappend="${blog.like == 1} ? 'btn-blue' : ''">좋아요</button>
-    </form>
-    <form th:action="@{/jun/post-detail/{id}/unlike(id=${blog.id})}" method="post" style="display:inline;">
-        <button type="submit" class="btn btn-danger mt-3" th:classappend="${blog.like == 0} ? 'btn-dark' : ''">싫어요</button>
-    </form>
+    <button class="like-button" th:classappend="${blog.like == 1} ? 'btn-blue' : ''" onclick="likeMethod()">
+        좋아요
+    </button>
+    <button type="submit" class="unlike-button" th:classappend="${blog.like == 0} ? 'btn-blue' : ''">안좋아요</button>
 </div>
+<script th:inline="javascript">
+
+
+    const likeMethod = () => {
+        const id = [[${blog.id}]];
+        fetch(`/jun/post-detail/${id}/like`, {
+            method: "POST"
+        }).then(res => res.json()).then(data => console.log(data))
+            .catch(error => console.log(error));
+    }
+</script>
 </body>
 </html>

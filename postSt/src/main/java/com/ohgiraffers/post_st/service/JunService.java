@@ -112,7 +112,7 @@ public class JunService {
         return blog;
     }
 
-    // 싫어요 기능
+    // 안좋아요 기능
     @Transactional
     public JunBlog unlikeBlog(Long id) {
         JunBlog blog = junRepository.findById(id).orElse(null);
@@ -124,6 +124,8 @@ public class JunService {
         }
         return blog;
     }
+
+
 
 
 
