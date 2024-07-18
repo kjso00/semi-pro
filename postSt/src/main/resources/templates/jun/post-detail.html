@@ -44,7 +44,6 @@
     const likeMethod = () => {
         // id 변수에 [[${blog.id}]] 이 값이 할당
         const id = [[${blog.id}]];
-
         // fetch(요청을 보낼 경로url, option(요청방식 ex)get,post 등등.. 기본값은 get))
         // /jun/post-detail/${id}/like 이 경로로 POST방식으로 요청을 보냄
         fetch(`/jun/post-detail/${id}/like`, {

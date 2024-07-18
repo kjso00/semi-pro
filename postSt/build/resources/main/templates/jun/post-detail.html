@@ -28,6 +28,7 @@
     <button class="btn btn-primary mt-3" onclick="location.href='/jun/post-list'">목록으로</button>
 </div>
 <div>
+<!--    // oneclick을 클릭했을때 js의 likeMethod함수를 호출-->
     <button type="submit" class="like-button" th:classappend="${blog.like == 1} ? 'btn-blue' : ''"
             onclick="likeMethod()">
         좋아요
@@ -43,7 +44,6 @@
     const likeMethod = () => {
         // id 변수에 [[${blog.id}]] 이 값이 할당
         const id = [[${blog.id}]];
-
         // fetch(요청을 보낼 경로url, option(요청방식 ex)get,post 등등.. 기본값은 get))
         // /jun/post-detail/${id}/like 이 경로로 POST방식으로 요청을 보냄
         fetch(`/jun/post-detail/${id}/like`, {
