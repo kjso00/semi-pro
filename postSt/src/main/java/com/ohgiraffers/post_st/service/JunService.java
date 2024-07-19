@@ -1,8 +1,11 @@
 package com.ohgiraffers.post_st.service;
 
 
+import com.ohgiraffers.post_st.model.dto.CommentDTO;
 import com.ohgiraffers.post_st.model.dto.JunBlogDTO;
+import com.ohgiraffers.post_st.model.entity.Comment;
 import com.ohgiraffers.post_st.model.entity.JunBlog;
+import com.ohgiraffers.post_st.repository.CommentRepository;
 import com.ohgiraffers.post_st.repository.JunRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+
 
 @Service
 public class JunService {
@@ -22,11 +28,13 @@ public class JunService {
 
     // JunRepository 인터페이스를 구현한 빈을 주입받음
     private final JunRepository junRepository;
+    private final CommentRepository commentRepository;
 
 
     @Autowired
-    public JunService(JunRepository junRepository) {
+    public JunService(JunRepository junRepository, CommentRepository commentRepository) {
         this.junRepository = junRepository;
+        this.commentRepository = commentRepository;
     }
 
 
@@ -102,7 +110,7 @@ public class JunService {
         // 4. 게시글이 존재한다면
         if (blog != null) {
             // 5. 조회한 게시글의 좋아요 상태를 확인한다.
-            if (Objects.isNull(blog.getLike()) || blog.getLike() != 1){
+            if (Objects.isNull(blog.getLike()) || blog.getLike() != 1) {
                 //6. 좋아요가 없으면 좋아요 상태 변경
                 blog.setLike(1);
                 blog = junRepository.save(blog);
@@ -117,7 +125,7 @@ public class JunService {
     public JunBlog unlikeBlog(Long id) {
         JunBlog blog = junRepository.findById(id).orElse(null);
         if (blog != null) {
-            if (Objects.isNull(blog.getLike()) || blog.getLike() != 0){
+            if (Objects.isNull(blog.getLike()) || blog.getLike() != 0) {
                 blog.setLike(0);
                 blog = junRepository.save(blog);
             }
@@ -125,11 +133,54 @@ public class JunService {
         return blog;
     }
 
+    // 댓글 등록
 
+//    public List<JunBlog> getAllBlogs() {
+//        return junRepository.findAll();
+//    }
 
+    @Transactional
+    public int addComment(CommentDTO commentDTO) {
+        if (commentDTO.getContent() == null || commentDTO.getContent().isEmpty()) {
+            throw new IllegalArgumentException("댓글 내용을 입력해 주세요.");
+        }
+        Comment comment = new Comment();
+        // ID를 설정하지 않도록 수정. ID는 자동 생성됩니다.
+        comment.setContent(commentDTO.getContent());
+        comment.setBlogId(commentDTO.getBlogid());
+        // 여기에서 blogId를 설정할 필요가 있습니다.
+        // 예를 들어, blogId를 추가로 전달받는 방법도 고려할 수 있습니다.
 
+        commentRepository.save(comment);
+        return 1;
+    }
+
+    // 댓글 목록
+    // 모든 댓글을 가져오는 메서드
+    public List<Comment> getAllComments() {
+        return commentRepository.findAll();
+    }
+
+    // 특정 ID를 가진 댓글을 가져오는 메서드
+    public Comment getCommentById(Long id) {
+        return commentRepository.findById(id).orElse(null);
+    }
+
+    // 특정 블로그 ID에 달린 댓글을 가져오는 메서드
+    public List<Comment> getCommentsByBlogId(Long blogId) {
+        return commentRepository.findAll().stream()
+                .filter(comment -> blogId.equals(comment.getBlogId()))
+                .collect(Collectors.toList());
+    }
 
 }
+
+
+
+
+
+
+
 
 
 

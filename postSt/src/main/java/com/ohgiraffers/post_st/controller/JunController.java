@@ -1,7 +1,9 @@
 package com.ohgiraffers.post_st.controller;
 
 
+import com.ohgiraffers.post_st.model.dto.CommentDTO;
 import com.ohgiraffers.post_st.model.dto.JunBlogDTO;
+import com.ohgiraffers.post_st.model.entity.Comment;
 import com.ohgiraffers.post_st.model.entity.JunBlog;
 import com.ohgiraffers.post_st.service.JunService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,27 +58,75 @@ public class JunController {
         return "/jun/post";
     }
 
+//("/jun/post-detail/{id}/comment")
+    @PostMapping("/post-detail/{id}}")
+    // @PathVariable Long id: url 경로에서 {id} 부분의 값을 추출하여 메서드 매개변수 'id'에 매핑.
+    // 이 값은 댓글이 달릴 특정 블로그 게시물의 ID
+    // @ModelAttribute CommentDTO commentDTO: 요청 파라미터를 'CommentDTO' 객체에 매핑.
+    // 폼 데이터가 자동으로 'CommentDTO'객체에 바인딩
+    public String postComment(@PathVariable Long id, @ModelAttribute CommentDTO commentDTO, Model model) {
+
+//        if (id == null || id <= 0) {
+//
+//            return "redirect:/jun/post-list";
+//        }
+
+        // 댓글 코멘트가 null이거나 빈 문자열이면 /jun/post-detail/{id} 페이지로 리다이렉트
+        if (commentDTO.getContent() == null || commentDTO.getContent().trim().isEmpty()) {
+
+            return "redirect:/jun/post-detail/" + id;
+        }
+        // 댓글 등록
+        commentDTO.setBlogid(id);  // 댓글이 달릴 블로그 ID 설정
+        int result1 = junService.addComment(commentDTO);
+
+        if (result1 <= 0) {
+            return "redirect:/jun/post-list";
+        }else{
+            // 댓글 목록 페이지로
+            return "redirect:/jun/comment-list";
+        }
+
+    }
+
+    @GetMapping("/comment-list")
+    public String viewPostWithComments(@PathVariable Long id, Model model) {
+        // 블로그 게시물의 댓글을 가져옵니다
+        List<Comment> comments = junService.getCommentsByBlogId(id);
+
+        // 댓글 목록을 모델에 추가합니다
+        model.addAttribute("comments", comments);
+
+        // 블로그 게시물 정보도 모델에 추가합니다 (추가로 구현된 경우)
+        // JunBlog blog = blogService.getBlogById(id); // 블로그 정보 추가
+        // model.addAttribute("blog", blog);
+
+        // 뷰 이름을 반환합니다 (뷰 파일이 `post-detail.html`이라고 가정)
+        return "/jun/comment-list";
+    }
+
+
     // 게시물을 등록하는 부분
     @PostMapping
     // 게시물 작성 폼을 통해 전송한 데이터를 'JunBlogDTO' 객체에 자동으로 매핑
     // 'postBlog' 메소드가 호출될 때, 'JunBlogDTO' 객체는 폼 데이터로 초기화된 상태로 전달
-    public ModelAndView postBlog(JunBlogDTO junBlogDTO, ModelAndView mv){
+    public ModelAndView postBlog(JunBlogDTO junBlogDTO, ModelAndView mv) {
         // 유효성 검사
         // 블로그 제목이 null이거나 빈 문자열인 경우 리다이렉트
         // 'junBlogDTO'객체의 'blogTitle' 필드를 가져옴, 'blogTitle' 필드가 'null'인지 확인,
         // or 제목이 빈 문자열인 경우 전체 조건이 참이됨
         // 위 조건이 참이면 /jun/post로 리다이렉트
-        if(junBlogDTO.getBlogTitle() == null || junBlogDTO.getBlogTitle().equals("")){
+        if (junBlogDTO.getBlogTitle() == null || junBlogDTO.getBlogTitle().equals("")) {
             mv.setViewName("redirect:/jun/post");
         }
         // 블로그 내용이 null이거나 빈 문자열인 경우 리다이렉트
-        if(junBlogDTO.getBlogContent() == null || junBlogDTO.getBlogContent().equals("")){
+        if (junBlogDTO.getBlogContent() == null || junBlogDTO.getBlogContent().equals("")) {
             mv.setViewName("redirect:/jun/post");
         }
         // 서비스 클래스의 post 메서드를 호출하여 블로그 게시글을 저장하고 결과를 받음
         int result = junService.post(junBlogDTO);
         // 결과가 0 이하인 경우 에러 페이지로 이동
-        if(result <= 0){
+        if (result <= 0) {
             mv.setViewName("error/page");
         } else {
             // 결과가 양수인 경우 성공 페이지로 이동
@@ -87,6 +137,7 @@ public class JunController {
         // ModelAndView 객체를 반환합니다.
         return mv;
     }
+
     // 글 목록
     // "/post-list"로 url 요청을 날림
     @GetMapping("/post-list")
@@ -139,6 +190,8 @@ public class JunController {
         return "/jun/post-edit";
     }
 
+
+
     @PostMapping("/update")
     public String updatePost(@ModelAttribute("junBlogDTO") JunBlogDTO junBlogDTO) {
         JunBlog updatedPost = junService.updatePost(junBlogDTO);
@@ -157,11 +210,25 @@ public class JunController {
         junService.deleteBlog(id);
         return "redirect:/jun/post-list";
     }
+}
 
-    // 좋아요 기능
-    // 1. 게시물 상세조회 페이지에서 좋아요 버튼 넣기
-    // 2. 좋아요 버튼을 누르면 아이콘 색깔이 변하고 정보가 DB에 저장
-    // 3. 다시 좋아요 버튼을 누르면 아이콘 색깔이 되돌아오고 DB에서 데이터가 삭제됨
+//    // 댓글 작성
+//    @PostMapping("/jun/post-detail/{id}/comment")
+//    // @PathVariable Long id: url 경로에서 {id} 부분의 값을 추출하여 메서드 매개변수 'id'에 매핑.
+//    // 이 값은 댓글이 달릴 특정 블로그 게시물의 ID
+//    // @ModelAttribute CommentDTO commentDTO: 요청 파라미터를 'CommentDTO' 객체에 매핑.
+//    // 폼 데이터가 자동으로 'CommentDTO'객체에 바인딩
+//    public String postComment(@PathVariable Long id, @ModelAttribute CommentDTO commentDTO , Model model) {}
+
+
+
+
+
+
+
+
+
+
 
 //     좋아요 기능
 //     1. 컨트롤러에 게시글 id 전달 - @@PathVariable
@@ -206,7 +273,7 @@ public class JunController {
 //-------------------------------------------------------------------------------------------------------------- 컨트롤러
 
 
-}
+
 
 
 

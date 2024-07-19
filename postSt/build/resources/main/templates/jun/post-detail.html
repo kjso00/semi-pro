@@ -25,6 +25,21 @@
             </p>
         </div>
     </div>
+<br><br>
+    <div class="card mt-4">
+        <div class="card-header">
+            댓글 작성
+        </div>
+        <div class="card-body">
+            <form id="comment-form" th:action="@{/jun/post-detail/{id}/comment(id=${blog.id})}" method="post">
+                <div class="form-group">
+                    <label for="comment-content">댓글 내용</label>
+                    <textarea class="form-control" id="comment-content" name="content" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">댓글 작성</button>
+            </form>
+        </div>
+    </div>
     <button class="btn btn-primary mt-3" onclick="location.href='/jun/post-list'">목록으로</button>
 </div>
 <div>

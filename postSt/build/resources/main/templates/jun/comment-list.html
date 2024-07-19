@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h3>Comments</h3>
+<div class="comments">
+    <ul>
+        <li th:each="comment : ${comments}">
+            <div>
+                <p><strong>Comment ID:</strong> <span th:text="${comment.comid}"></span></p>
+                <p><strong>Content:</strong> <span th:text="${comment.content}"></span></p>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
