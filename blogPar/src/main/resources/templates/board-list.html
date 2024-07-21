@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>title</th>
+        <th>content</th>
+        <th>OPTION</th>
+    </tr>
+    <tr th:each="board: ${boardList}">
+
+        <td th:text="${board.boardTitle}"></td>
+        <td th:text="${board.boardContent}"></td>
+    </tr>
+</table>
+</body>
+</html>

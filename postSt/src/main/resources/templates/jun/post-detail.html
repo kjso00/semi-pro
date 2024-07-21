@@ -25,22 +25,13 @@
             </p>
         </div>
     </div>
-<br><br>
-    <div class="card mt-4">
-        <div class="card-header">
-            댓글 작성
-        </div>
-        <div class="card-body">
-            <form id="comment-form" th:action="@{/jun/post-detail/{id}}" method="post">
-                <div class="form-group">
-                    <label for="comment-content">댓글 내용</label>
-                    <textarea class="form-control" id="comment-content" name="content" rows="3" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">댓글 작성</button>
-            </form>
-        </div>
-    </div>
     <button class="btn btn-primary mt-3" onclick="location.href='/jun/post-list'">목록으로</button>
+
+    <form th:action="@{/jun/post-detail/{id}/add-comment}" method="post">
+        <textarea name="comment" placeholder="댓글을 입력하세요" required></textarea>
+        <button type="submit">댓글 등록</button>
+    </form>
+
 </div>
 <div>
 <!--    // oneclick을 클릭했을때 js의 likeMethod함수를 호출-->

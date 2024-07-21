@@ -31,10 +31,8 @@ public class JunBlog {
     @Column(name = "blog_like", nullable = false, columnDefinition = "INT DEFAULT 0")
     private int like;
 
-//     블로그와 댓글 간의 일대다 관계를 정의합니다.
-//     하나의 블로그 게시글에는 여러 개의 댓글이 달릴 수 있기 떄문에
-//     mappedBy: 반대편 엔티티에서 이 관계를 소유하고 있는 필드의 이름을 지정
-//     cascade: 부모 에니티에서 수행된 작업이 자식 엔티티에 어떻게 전파되는지를 정의 (종류 많아서 쓸때 찾아보기)
+
+
 
     public JunBlog() {
     }
@@ -45,6 +43,7 @@ public class JunBlog {
         this.blogContent = blogContent;
         this.createDate = createDate;
         this.like = like;
+
     }
 
     public Long getId() {
@@ -98,3 +97,4 @@ public class JunBlog {
                 '}';
     }
 }
+
