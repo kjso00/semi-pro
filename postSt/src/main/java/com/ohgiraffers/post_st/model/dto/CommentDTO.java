@@ -2,41 +2,39 @@ package com.ohgiraffers.post_st.model.dto;
 
 public class CommentDTO {
 
-//    private Long id;
+    private String comment;
 
-    private String content;
-
-    private Long blogid;
+    private String reply;
 
     public CommentDTO() {
     }
 
-    public CommentDTO(String content, Long blogid) {
-        this.content = content;
-        this.blogid = blogid;
+    public CommentDTO(String comment, String reply) {
+        this.comment = comment;
+        this.reply = reply;
     }
 
-    public String getContent() {
-        return content;
+    public String getComment() {
+        return comment;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public Long getBlogid() {
-        return blogid;
+    public String getReply() {
+        return reply;
     }
 
-    public void setBlogid(Long blogid) {
-        this.blogid = blogid;
+    public void setReply(String reply) {
+        this.reply = reply;
     }
 
     @Override
     public String toString() {
         return "CommentDTO{" +
-                "content='" + content + '\'' +
-                ", blogid=" + blogid +
+                "comment='" + comment + '\'' +
+                ", reply='" + reply + '\'' +
                 '}';
     }
 }

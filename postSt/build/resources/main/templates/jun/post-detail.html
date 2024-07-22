@@ -25,12 +25,29 @@
             </p>
         </div>
     </div>
+    <br><br><br>
+    <div>
+        <form action="/jun/comment-save" method="post">
+            <input type="text" name="comment">
+            <input type="submit" value="댓글작성">
+        </form>
+
+
+
+<!--        <form th:action="@{/jun/comment-save}" method="post" >-->
+<!--            <div class="mb-3">-->
+<!--                <input type="text" class="form-control" id="comment"  required>-->
+<!--            </div>-->
+<!--            <input type="submit" value="글작성">-->
+<!--        </form>-->
+
+    </div>
+    </div>
+
+
     <button class="btn btn-primary mt-3" onclick="location.href='/jun/post-list'">목록으로</button>
 
-    <form th:action="@{/jun/post-detail/{id}/add-comment}" method="post">
-        <textarea name="comment" placeholder="댓글을 입력하세요" required></textarea>
-        <button type="submit">댓글 등록</button>
-    </form>
+
 
 </div>
 <div>

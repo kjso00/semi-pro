@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/css/list.css}" rel="stylesheet" />
 </head>
 <body>
+<div class="container my-5">
+    <h1 class="text-center mb-4">Comment List</h1>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Content</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comments : ${commentList}">
 
-<h3>Comments</h3>
-<div class="comments">
-    <ul>
-        <li th:each="comment : ${comments}">
-            <div>
-                <p><strong>Comment ID:</strong> <span th:text="${comment.comid}"></span></p>
-                <p><strong>Content:</strong> <span th:text="${comment.content}"></span></p>
-            </div>
-        </li>
-    </ul>
+            <td th:text="${comments.comment}"></td>
+
+        </tr>
+        </tbody>
+
+    </table>
 </div>
 </body>
 </html>

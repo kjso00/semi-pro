@@ -2,25 +2,16 @@ package com.ohgiraffers.blogpar.blog.dto;
 
 //DTO(Data Transfer Object) , VO, Bean
 public class BoardDTO {
-    private Long id;
+
     private String boardTitle;
     private String boardContents;
 
     public BoardDTO() {
     }
 
-    public BoardDTO(Long id, String boardTitle, String boardContents) {
-        this.id = id;
+    public BoardDTO(String boardTitle, String boardContents) {
         this.boardTitle = boardTitle;
         this.boardContents = boardContents;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getBoardTitle() {
@@ -42,8 +33,7 @@ public class BoardDTO {
     @Override
     public String toString() {
         return "BoardDTO{" +
-                "id=" + id +
-                ", boardTitle='" + boardTitle + '\'' +
+                "boardTitle='" + boardTitle + '\'' +
                 ", boardContents='" + boardContents + '\'' +
                 '}';
     }

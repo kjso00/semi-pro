@@ -4,6 +4,7 @@ package com.ohgiraffers.blogpar.blog.service;
 import com.ohgiraffers.blogpar.blog.dto.BoardDTO;
 import com.ohgiraffers.blogpar.blog.entity.BoardEntity;
 import com.ohgiraffers.blogpar.blog.repository.BoardRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +29,9 @@ public class BoardService {
     }
 
 
-    // 게시글 등록
+    // 게시글
+    @Transactional
     public void save(BoardDTO boardDTO) {
-
         // 새로운 BoardEntity 객체를 생성하고 DTO로부터 받은 데이터를 설정
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());

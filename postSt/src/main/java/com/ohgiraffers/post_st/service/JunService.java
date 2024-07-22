@@ -1,20 +1,19 @@
 package com.ohgiraffers.post_st.service;
 
 
+import com.ohgiraffers.post_st.model.dto.CommentDTO;
 import com.ohgiraffers.post_st.model.dto.JunBlogDTO;
-import com.ohgiraffers.post_st.model.entity.BlogComment;
+import com.ohgiraffers.post_st.model.entity.Comment;
 import com.ohgiraffers.post_st.model.entity.JunBlog;
 import com.ohgiraffers.post_st.repository.BlogCommentRepository;
 import com.ohgiraffers.post_st.repository.JunRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class JunService {
@@ -128,23 +127,21 @@ public class JunService {
         return blog;
     }
 
-    // 댓글
+    @Transactional
+    public void saveComment(CommentDTO commentDTO) {
+        Comment comment = new Comment();
+        comment.setComment(commentDTO.getComment());
+        blogCommentRepository.save(comment);
+    }
 
     @Transactional
-    public BlogComment addComment(Long blogId, String comment) {
-        if (comment == null || comment.trim().isEmpty()) {
-            throw new IllegalArgumentException("Comment cannot be null or empty");
-        }
-        BlogComment comments = new BlogComment();
-        comments.setComment(comment);
-        comments.setBlogId(blogId);
-
-        return blogCommentRepository.save(comments);
+    public List<Comment> getAllComments() {
+        return blogCommentRepository.findAll();
     }
 
-    public List<BlogComment> getCommentsByBlogId(Long blogId) {
-        return blogCommentRepository.findByBlogId(blogId);
-    }
+    // 댓글
+
+
 
 
 

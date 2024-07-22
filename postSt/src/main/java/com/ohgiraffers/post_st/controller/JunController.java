@@ -1,14 +1,14 @@
 package com.ohgiraffers.post_st.controller;
 
 
+import com.ohgiraffers.post_st.model.dto.CommentDTO;
 import com.ohgiraffers.post_st.model.dto.JunBlogDTO;
-import com.ohgiraffers.post_st.model.entity.BlogComment;
+import com.ohgiraffers.post_st.model.entity.Comment;
 import com.ohgiraffers.post_st.model.entity.JunBlog;
 import com.ohgiraffers.post_st.service.JunService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +27,7 @@ public class JunController {
     // 'private final'로 선언해서 반드시 초기화 해야되고(생성자에서), 변경할 수 없음
     // JunService 타입의 junService라는 멤버 변수를 선언
     private final JunService junService;
+
 
     // JunService의 인스턴스를 주입함
     // 스프링이 JunController를 생성할 때, JunService의 구현체를 자동으로 주입함
@@ -168,22 +169,21 @@ public class JunController {
 //     1. 컨트롤러에 게시글 id 전달 - @@PathVariable
 // 좋아요 기능 fetch api 사용해서 비동기 방식으로 바꾸기
 
-    @GetMapping("/post-detail/{id}")  ///{id}
-    public String getPostDetail(@PathVariable Long id, Model model) {
-//        BlogPost blogPost = junService.getBlogById(id);
-        List<BlogComment> comments = junService.getCommentsByBlogId(id);
 
-        model.addAttribute("comments", comments);
-        model.addAttribute("comment", new BlogComment()); // 빈 댓글 객체를 추가
-
-        return "post-detail";
-    }
-
-    @PostMapping("/post-detail/{id}/add-comment")
-    public String addComment(@PathVariable Long id, @RequestParam String comment) {
-        junService.addComment(id, comment);
+    // 댓글 등록
+    @PostMapping("/comment-save")
+    public String saveComment(@ModelAttribute CommentDTO commentDTO) {
+        junService.saveComment(commentDTO);
         return "redirect:/jun/post-list";
     }
+
+    @GetMapping("/comment-list")
+    public String getCommentList(Model model) {
+        List<Comment> commentList = junService.getAllComments();
+        model.addAttribute("commentList", commentList);
+        return "/jun/comment-list";
+    }
+
 
 
 

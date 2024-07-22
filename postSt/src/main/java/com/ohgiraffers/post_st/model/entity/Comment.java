@@ -2,68 +2,74 @@ package com.ohgiraffers.post_st.model.entity;
 
 
 import jakarta.persistence.*;
-import org.springframework.lang.NonNull;
-
-import java.util.Date;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
-@Table(name= "jun_comment")
+@Table(name="comment_table")
 public class Comment {
-
     @Id
-    @Column(name= "comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long comid;
+    private Long id;
 
-    @NonNull
-    @Column(name = "content", nullable = false, length = 1000)
-    private String content;
+    @Column(length = 500, nullable = false)
+    @NotNull
+    private String comment;
 
-    @Column(name = "blog_ID")
-    private Long blogId;
+    @Column(length = 500)
+    private String reply = "";
 
-//    @Column(name = "blog_id", nullable = false)
-//    private Long blogId;
+    private Long blog_id = 0L;
+
 
     public Comment() {
     }
 
-    public Comment(Long comid, String content, Long blogId) {
-        this.comid = comid;
-        this.content = content;
-        this.blogId = blogId;
+    public Comment(Long id, String comment, String reply, Long blog_id) {
+        this.id = id;
+        this.comment = comment;
+        this.reply = reply;
+        this.blog_id = blog_id;
     }
 
-    public Long getComid() {
-        return comid;
+    public Long getId() {
+        return id;
     }
 
-    public void setComid(Long comid) {
-        this.comid = comid;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getComment() {
+        return comment;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public Long getBlogId() {
-        return blogId;
+    public String getReply() {
+        return reply;
     }
 
-    public void setBlogId(Long blogId) {
-        this.blogId = blogId;
+    public void setReply(String reply) {
+        this.reply = reply;
+    }
+
+    public Long getBlog_id() {
+        return blog_id;
+    }
+
+    public void setBlog_id(Long blog_id) {
+        this.blog_id = blog_id;
     }
 
     @Override
     public String toString() {
         return "Comment{" +
-                "comid=" + comid +
-                ", content='" + content + '\'' +
-                ", blogId=" + blogId +
+                "id=" + id +
+                ", comment='" + comment + '\'' +
+                ", reply='" + reply + '\'' +
+                ", blog_id=" + blog_id +
                 '}';
     }
 }
